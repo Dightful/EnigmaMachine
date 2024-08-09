@@ -109,6 +109,8 @@ class Rotors {
         int shift_of_rotor3;
 
     public:
+
+
         Rotors(const char rotor1[26], const char rotor2[26], const char rotor3[26], const char received_alphabet[26]) {
             memcpy(rotor1_letters, rotor1, 26 * sizeof(int));
             memcpy(rotor2_letters, rotor2, 26 * sizeof(int));
@@ -194,6 +196,20 @@ class Rotors {
             }
         }
 
+        int Rotor_Traversal(const char rotorN_letters[26], int shift_of_rotorN, int last_updated_index_new_letterN_alphabet) {
+            //Finding the letter at that index
+            char rotorN_corresponding_letter = rotorN_letters[last_updated_index_new_letterN_alphabet];
+
+            //This is the index of that letter from the alphabet
+            char* rotor2_target_ptr = find(&alphabet[0], alphabet + 26, rotorN_corresponding_letter);
+            int index_new_letterN_alphabet = rotor2_target_ptr - alphabet;
+
+            // Accounting for any inital starting point shift
+            int updated_index_new_letterN_alphabet = index_new_letterN_alphabet - shift_of_rotorN;
+
+            return updated_index_new_letterN_alphabet;
+        }
+        
         void Display_The_Rotors() {
             cout << "To left: " << endl;
             for (int i = 0;i < 26;i++)
@@ -210,39 +226,81 @@ class Rotors {
 
         void Encrypt(char letter_to_be_encrypted) {
             
+            char reflector_letters[26] = { 'Q','Y','H','O','G','N','E','C','V','P','U','Z','T','F','D','J','A','X','W','M','K','I','S','R','B','L' };
+
+
             //For rotor 3
-            
+            //
+
             //Rotating the rotor once before first encrypting
             Rotor3_Shift(1);
             //Adding 1 to the shift of rotor 3.
             shift_of_rotor3++;
             Display_The_Rotors();
+
             //Getting the pointer of the alphabet
             char* target_ptr = find(&alphabet[0], alphabet + 26, letter_to_be_encrypted);
             // getting index from alphabet array of letter_to_be_encrypted
             int index_letterTBE_alphabet = target_ptr - alphabet;
 
-            // The corresponding index letter in the rotor3
-            int position_in_alphabet = index_letterTBE_alphabet;
-            char rotor3_corresponding_letter = rotor3_letters[position_in_alphabet];
+            //Traversing the Rotor, going from index, to same letter in the shifted alphabet, and finding that index.
+            int updated_index_new_letter3_alphabet = Rotor_Traversal(rotor3_letters, shift_of_rotor3, index_letterTBE_alphabet);
 
 
-            //This is the index of that letter from the alphabet, with accounting for the initial shift.
-            char* rotor3_target_ptr = find(&alphabet[0], alphabet + 26, rotor3_corresponding_letter);
-            int index_new_letter_alphabet = rotor3_target_ptr - alphabet;
-            
-            // Accounting for any inital starting point shift
-            int updated_index_new_letter_alphabet = index_new_letter_alphabet - shift_of_rotor3;
-            
-            
             // For rotor 2
-
+            //
+            
             //Checking to see if the previous rotor (3) has stepped from V to W.
             if (shift_of_rotor3 == 22) {
                 Rotor2_Shift(1);
                 //Adding 1 to the shift of rotor 3.
                 shift_of_rotor2++;
             }
+
+            //Traversing the Rotor
+            int updated_index_new_letter2_alphabet = Rotor_Traversal(rotor2_letters, shift_of_rotor2, updated_index_new_letter3_alphabet);
+
+            
+            // For rotor 3
+            //
+
+            //Checking to see if the previous rotor (3) has stepped from V to W.
+            if (shift_of_rotor2 == 5) {
+                Rotor3_Shift(1);
+                //Adding 1 to the shift of rotor 3.
+                shift_of_rotor3++;
+            }
+
+            //Traversing the Rotor
+            int updated_index_new_letter1_alphabet = Rotor_Traversal(rotor1_letters, shift_of_rotor1, updated_index_new_letter2_alphabet);
+
+
+            // For Reflector
+            //
+            
+            
+            //Finding the letter at that index inm the alphabet
+            char rotorR_corresponding_letter = alphabet[updated_index_new_letter1_alphabet];
+
+            //This is the index of that letter from the alphabet
+            char* rotorR_target_ptr = find(&reflector_letters[0], reflector_letters + 26, rotorR_corresponding_letter);
+            int index_new_letterR_alphabet = rotorR_target_ptr - reflector_letters;
+
+
+            // Rotor 1 Reverse
+            //
+
+            //Finding the letter at that index inm the alphabet
+            char rotor1R_corresponding_letter = alphabet[index_new_letterR_alphabet];
+
+            //This is the index of that letter from the alphabet
+            char* rotor1R_target_ptr = find(&rotor1_letters[0], rotor1_letters + 26, rotor1R_corresponding_letter);
+            int index_new_letter1R_alphabet = rotor1R_target_ptr - rotor1_letters - shift_of_rotor1;
+
+
+
+            cout << "fkjng";
+
 
 
 
