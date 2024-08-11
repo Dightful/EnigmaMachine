@@ -20,7 +20,6 @@ static void PlugBoard(string (&arr_of_mappings)[13])
     //Defing variables
     bool linking_letters = true;
     int counter_for_index = 0;
-    //string* arr_of_mappings = new string[26];
    
     //List to have the first letters in for error checking of multiple mappings of the same letter.
     list<string> list_of_mappings{};
@@ -60,7 +59,7 @@ static void PlugBoard(string (&arr_of_mappings)[13])
         }
         //Adding the mapping to the array and the first letter to the list of first letters
         else {
-
+            //adding the mapping to the array
             arr_of_mappings[counter_for_index] = Mapping;
             list_of_mappings.emplace_back(Mapping);
             counter_for_index++;
@@ -123,17 +122,10 @@ class Rotors {
             char received_starting_position_rotor2;
             char received_starting_position_rotor3;
             cout << "Please enter starting letter for the 3 rotors stating with the 1st rotor: \n";
-            bool not_allowed = true; 
-            while (not_allowed) {
-                cin >> received_starting_position_rotor1;
-                cin >> received_starting_position_rotor2;
-                cin >> received_starting_position_rotor3;
-                if ((received_starting_position_rotor1.size() || received_starting_position_rotor2 || received_starting_position_rotor3)) {
 
-                }
-            }
-            
-;
+            cin >> received_starting_position_rotor1;
+            cin >> received_starting_position_rotor2;
+            cin >> received_starting_position_rotor3;
 
             received_starting_position_rotor1 = toupper(received_starting_position_rotor1);
             received_starting_position_rotor2 = toupper(received_starting_position_rotor2);
@@ -375,16 +367,6 @@ int main()
 
     PlugBoard(arr_of_mappings);
 
-
-
-    /*string* ptr_arr_of_mappings = PlugBoard();
-    string arr_of_mappings[26];
-
-    for (int i = 0; i < 26; ++i) {
-
-        arr_of_mappings[i] = ptr_arr_of_mappings[i];
-    }
-    delete[] ptr_arr_of_mappings;*/
 
     //Setting up the rotor initial positions.
 
