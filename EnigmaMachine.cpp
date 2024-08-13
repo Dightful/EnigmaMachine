@@ -8,7 +8,6 @@
 #include <cstring>
 using namespace std;
 
-// REMEMBER KEY CANNOT MAP TO SAME KEY
 
 // Plugboard - Select what letters are plugged together, default is none. Optional do random selector
 static void PlugBoard(string (&arr_of_mappings)[13])
@@ -64,36 +63,9 @@ static void PlugBoard(string (&arr_of_mappings)[13])
             list_of_mappings.emplace_back(Mapping);
             counter_for_index++;
         }
-
     }
-
-    //return arr_of_mappings;
-
-    
 }
 
-// Rotors - have 3 rotors, remember furthest right (3rd) rotor rotates after each input. Once its done a rotation, turn to middle by one, and when middle one rotated all the way rotate the left.
-// Starting Positions of the rotors
-// 
-//Rotor ABCDEFGHIJKLMNOPQRSTUVWXYZ	Date Introduced | Model Name & Number
-// I	JGDQOXUSCAMIFRVTPNEWKBLZYH	7 February 1941	  German Railway (Rocket)
-//II	NTZPSFBOKMWRCJDIVLAEYUXHGQ	7 February 1941	  German Railway (Rocket)
-//III	JVIUBHTCDYAKEQZPOSGXNRMWFL	7 February 1941	  German Railway (Rocket)
-
-//Rotor	Notch	Effect
-//I	    Q	    If rotor steps from Q to R, the next rotor is advanced
-//II	E	    If rotor steps from E to F, the next rotor is advanced
-//III	V	    If rotor steps from V to W, the next rotor is advanced
-
-
-
-    // Reflector - turns the input letter out, take parameters as, inout letter and what rotor this is 
-    //Reflector ABCDEFGHIJKLMNOPQRSTUVWXYZ	Date Introduced | Model Name & Number
-    //UKW       QYHOGNECVPUZTFDJAXWMKISRBL	7 February 1941	| German Railway(Rocket)
-
-
-
-    //Ring Setting????????????? how does this work and how to implement?
 
 
 class Rotors {
@@ -282,8 +254,8 @@ class Rotors {
         }
 
         char Encrypt(char letter_to_be_encrypted) {
-            
-            char reflector_letters[26] = { 'Q','Y','H','O','G','N','E','C','V','P','U','Z','T','F','D','J','A','X','W','M','K','I','S','R','B','L' };
+            //Reflector A
+            char reflector_letters[26] = { 'E','J','M','Z','A','L','Y','X','V','B','W','F','C','R','Q','U','O','N','T','S','P','I','K','H','G','D' };
 
 
             //For rotor 3
@@ -337,14 +309,6 @@ class Rotors {
             
             int updated_index_new_letterR_alphabet = Rotor_Traversal(alphabet, 0, updated_index_new_letter1_alphabet, reflector_letters, true);
 
-            
-            //Finding the letter at that index inm the alphabet
-            //char rotorR_corresponding_letter = alphabet[updated_index_new_letter1_alphabet];
-
-            ////This is the index of that letter from the alphabet
-            //char* rotorR_target_ptr = find(&reflector_letters[0], reflector_letters + 26, rotorR_corresponding_letter);
-            //int index_new_letterR_alphabet = rotorR_target_ptr - reflector_letters;
-
 
             // Rotor 1 Reverse
             //
@@ -378,9 +342,7 @@ class Rotors {
 
 int main()
 {
-    //Coping the pointer of array received to new local array.
-
-    // Create the arr_of_mappings here, pass it in by reference and edit it there.
+    // Creating the arr_of_mappings here, passing it in by reference.
 
     string arr_of_mappings[13];
 
@@ -390,9 +352,9 @@ int main()
     //Setting up the rotor initial positions.
 
     //Rotor wiring tables 7th  February 1941	German Railway (Rocket)
-    char arr_rotor1_letters[26] = { 'J','G','D','Q','O','X','U','S','C','A','M','I','F','R','V','T','P','N','E','W','K','B','L','Z','Y','H' };
-    char arr_rotor2_letters[26] = { 'N','T','Z','P','S','F','B','O','K','M','W','R','C','J','D','I','V','L','A','E','Y','U','X','H','G','Q' };
-    char arr_rotor3_letters[26] = { 'J','V','I','U','B','H','T','C','D','Y','A','K','E','Q','Z','P','O','S','G','X','N','R','M','W','F','L' };
+    char arr_rotor1_letters[26] = { 'E','K','M','F','L','G','D','Q','V','Z','N','T','O','W','Y','H','X','U','S','P','A','I','B','R','C','J' };
+    char arr_rotor2_letters[26] = { 'A','J','D','K','S','I','R','U','X','B','L','H','W','T','M','C','Q','G','Z','N','P','Y','F','V','O','E' };
+    char arr_rotor3_letters[26] = { 'B','D','F','H','J','L','C','P','R','T','X','V','Z','N','Y','E','I','W','G','A','K','M','U','S','Q','O' };
     char arr_alphabet[26] =       { 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z' };
 
     Rotors EnigmaRotors(arr_rotor1_letters, arr_rotor2_letters, arr_rotor3_letters, arr_alphabet);
