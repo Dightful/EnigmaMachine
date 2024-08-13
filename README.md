@@ -1,14 +1,6 @@
 This is an engima machine coded in C++. Uses the enigma rotors from 1930.
 
-
-Rotor #	ABCDEFGHIJKLMNOPQRSTUVWXYZ	Date  Introduced	Model Name & Number
-I	      EKMFLGDQVZNTOWYHXUSPAIBRCJ	1930	Enigma I
-II    	AJDKSIRUXBLHWTMCQGZNPYFVOE	1930	Enigma I
-III	    BDFHJLCPRTXVZNYEIWGAKMUSQO	1930	Enigma I
-
-
 Has features such as initial ring setting, reflector and a plugboard.
-
 
 How it works:
 
