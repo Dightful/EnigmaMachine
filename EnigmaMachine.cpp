@@ -111,17 +111,39 @@ class Rotors {
     public:
 
 
-        Rotors(const char rotor1[26], const char rotor2[26], const char rotor3[26], const char received_alphabet[26]) {
-            memcpy(rotor1_letters, rotor1, 26 * sizeof(int));
-            memcpy(rotor2_letters, rotor2, 26 * sizeof(int));
-            memcpy(rotor3_letters, rotor3, 26 * sizeof(int));
-            memcpy(alphabet, received_alphabet, 26 * sizeof(int));
+        Rotors(char(&rotor1)[26], char(&rotor2)[26], char(&rotor3)[26], char(&received_alphabet)[26]) {
+            //Constructor, setting the rotor attributes 
+
+            int rotor1_counter = 0;
+            for (char letter : rotor1) {
+                rotor1_letters[rotor1_counter] = letter;
+                rotor1_counter++;
+            }
+
+            int rotor2_counter = 0;
+            for (char letter : rotor2) {
+                rotor2_letters[rotor2_counter] = letter;
+                rotor2_counter++;
+            }
+
+            int rotor3_counter = 0;
+            for (char letter : rotor3) {
+                rotor3_letters[rotor3_counter] = letter;
+                rotor3_counter++;
+            }
+
+            int alphabet_counter = 0;
+            for (char letter : received_alphabet) {
+                alphabet[alphabet_counter] = letter;
+                alphabet_counter++;
+            }
+            
 
             //Setting the inital settings for the rotors.
             char received_starting_position_rotor1;
             char received_starting_position_rotor2;
             char received_starting_position_rotor3;
-            cout << "Please enter starting letter for the 3 rotors stating with the 1st rotor: \n";
+            cout << "Please enter starting ring setting for the 3 rotors stating with the 1st rotor: \n";
 
             cin >> received_starting_position_rotor1;
             cin >> received_starting_position_rotor2;
@@ -131,34 +153,31 @@ class Rotors {
             received_starting_position_rotor2 = toupper(received_starting_position_rotor2);
             received_starting_position_rotor3 = toupper(received_starting_position_rotor3);
 
+            //Getting the corresponding index of the letter from the alphabet.
+            // And then shifting the rotors by that index amount
+            // 
+            //Rotor 1
+            char* rotor1_alphabet_target_ptr = find(&alphabet[0], alphabet + 26, received_starting_position_rotor1);
+            int index_received_starting_position_rotor1_alphabet = rotor1_alphabet_target_ptr - alphabet;
+            Rotor1_Shift(index_received_starting_position_rotor1_alphabet);
 
-            //Getting the pointer of the rotor 1 array
-            char* targetPtr1 = find(&rotor1_letters[0], rotor1_letters + 26, received_starting_position_rotor1);
-            // getting index from pointer
-            int targetIndex1 = targetPtr1 - rotor1_letters;
-            //Rotating the array to the correct position.
-            Rotor1_Shift(targetIndex1);
+            
+            //Rotor 2
+            char* rotor2_alphabet_target_ptr = find(&alphabet[0], alphabet + 26, received_starting_position_rotor2);
+            int index_received_starting_position_rotor2_alphabet = rotor2_alphabet_target_ptr - alphabet;
+            Rotor2_Shift(index_received_starting_position_rotor2_alphabet);
 
-
-            //Getting the pointer of the rotor 2 array
-            char* targetPtr2 = find(&rotor2_letters[0], rotor2_letters + 26, received_starting_position_rotor2);
-            // getting index from pointer
-            int targetIndex2 = targetPtr2 - rotor2_letters;
-            //Rotating the array to the correct position.
-            Rotor2_Shift(targetIndex2);
-
-
-            //Getting the pointer of the rotor 3 array
-            char* targetPtr3 = find(&rotor3_letters[0], rotor3_letters + 26, received_starting_position_rotor3);
-            // getting index from pointer
-            int targetIndex3 = targetPtr3 - rotor3_letters;
-            //Rotating the array to the correct position.
-            Rotor3_Shift(targetIndex3);
+            //Rotor 3
+            char* rotor3_alphabet_target_ptr = find(&alphabet[0], alphabet + 26, received_starting_position_rotor3);
+            int index_received_starting_position_rotor3_alphabet = rotor3_alphabet_target_ptr - alphabet;
+            Rotor3_Shift(index_received_starting_position_rotor3_alphabet);
 
 
-            shift_of_rotor1 = targetIndex1;
-            shift_of_rotor2 = targetIndex2;
-            shift_of_rotor3 = targetIndex3;
+
+            shift_of_rotor1 = index_received_starting_position_rotor1_alphabet;
+            shift_of_rotor2 = index_received_starting_position_rotor2_alphabet;
+            shift_of_rotor3 = index_received_starting_position_rotor3_alphabet;
+
         }
 
         void Rotor1_Shift(int shift_count) {
