@@ -430,7 +430,7 @@ int main()
     else {
         for (char letters : list_of_encrypted_letters) {
         cout << letters << " ";
-    }
+        }
     }
 
     
