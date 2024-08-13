@@ -1,5 +1,3 @@
-// EnigmaMachine.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <string>
@@ -367,7 +365,7 @@ int main()
     // Main loop
     while (entering_letters == true) {
         char letter_to_be_encrypted;
-        cout << "Please enter a letter you would like to encrypt:\n";
+        cout << "Please enter a letter(s) you would like to encrypt:\n";
         cin >> letter_to_be_encrypted;
 
         if (letter_to_be_encrypted == '1') {
@@ -426,9 +424,16 @@ int main()
     cout << "Encryption:\n";
 
 
-    for (char letters : list_of_encrypted_letters) {
+    if (list_of_encrypted_letters.size() == 0) {
+        cout << "No letters have been provided for encryption";
+    } 
+    else {
+        for (char letters : list_of_encrypted_letters) {
         cout << letters << " ";
     }
+    }
+
+    
 
 
     return 0;
