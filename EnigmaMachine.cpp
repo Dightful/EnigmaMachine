@@ -78,8 +78,12 @@ private:
     int shift_of_rotor2;
     int shift_of_rotor3;
 
+    
+
 public:
 
+    char reflector_letters[26] = { 'E','J','M','Z','A','L','Y','X','V','B','W','F','C','R','Q','U','O','N','T','S','P','I','K','H','G','D' };
+    string rotor_show;
 
     Rotors(char(&rotor1)[26], char(&rotor2)[26], char(&rotor3)[26], char(&received_alphabet)[26]) {
         //Constructor, setting the rotor attributes 
@@ -123,8 +127,7 @@ public:
         received_starting_position_rotor2 = toupper(received_starting_position_rotor2);
         received_starting_position_rotor3 = toupper(received_starting_position_rotor3);
 
-        //Getting the corresponding index of the letter from the alphabet.
-        // And then shifting the rotors by that index amount
+        //Getting the corresponding index of the letter from the alphabet. And then shifting the rotors by that index amount
         // 
         //Rotor 1
         char* rotor1_alphabet_target_ptr = find(&alphabet[0], alphabet + 26, received_starting_position_rotor1);
@@ -143,10 +146,20 @@ public:
         Rotor3_Shift(index_received_starting_position_rotor3_alphabet);
 
 
-
         shift_of_rotor1 = index_received_starting_position_rotor1_alphabet;
         shift_of_rotor2 = index_received_starting_position_rotor2_alphabet;
         shift_of_rotor3 = index_received_starting_position_rotor3_alphabet;
+
+ 
+        //Seeing if the user wants to show the rotors
+        cout << "Would you like to display the rotors after each input. [Y/N]  ";
+        cin >> rotor_show;
+
+        transform(rotor_show.begin(), rotor_show.end(), rotor_show.begin(), ::toupper);
+         
+        if (rotor_show == "Y") {
+            Display_The_Rotors();
+        }
 
     }
 
@@ -238,22 +251,36 @@ public:
     }
 
     void Display_The_Rotors() {
-        cout << "To left: " << endl;
-        for (int i = 0;i < 26;i++)
-            cout << rotor1_letters[i] << endl;
 
-        cout << "\nTo left: " << endl;
-        for (int i = 0;i < 26;i++)
-            cout << rotor2_letters[i] << endl;
+        cout << "Reflector | Rotor 1  |  Rotor 2  |  Rotor 3" << endl;
 
-        cout << "\nTo left: " << endl;
-        for (int i = 0;i < 26;i++)
-            cout << rotor3_letters[i] << endl;
+        for (int i = 0;i < 26;i++) {
+            // Setting the shift of rotor to be in index range.
+            int shift_of_rotor1N = shift_of_rotor1;
+            if ((shift_of_rotor1N + i) > 25) {
+                shift_of_rotor1N = shift_of_rotor1N - 26;
+            }
+
+            int shift_of_rotor2N = shift_of_rotor2;
+            if ((shift_of_rotor2N + i) > 25) {
+                shift_of_rotor2N = shift_of_rotor2N - 26;
+            }
+
+            int shift_of_rotor3N = shift_of_rotor3;
+            if ((shift_of_rotor3N + i) > 25) {
+                shift_of_rotor3N = shift_of_rotor3N - 26;
+            }
+
+            //Outputting all the rotors in the order they were in a real enigma machine.
+            cout << "    " << reflector_letters[i] << "     |   " << alphabet[shift_of_rotor1N + i] << " | " << rotor1_letters[i] << "  |    " << alphabet[shift_of_rotor2N + i] << " | " << rotor2_letters[i] << "  |    " << alphabet[shift_of_rotor3N + i] << " | " << rotor3_letters[i] << endl;
+            
+        }
+
     }
 
     char Encrypt(char letter_to_be_encrypted) {
         //Reflector A
-        char reflector_letters[26] = { 'E','J','M','Z','A','L','Y','X','V','B','W','F','C','R','Q','U','O','N','T','S','P','I','K','H','G','D' };
+        
 
 
         //For rotor 3
@@ -415,6 +442,12 @@ int main()
             }
 
         }
+
+        if (EnigmaRotors.rotor_show == "Y") {
+            EnigmaRotors.Display_The_Rotors();
+        }
+
+        cout << "The Letter: " << final_letter << endl;
 
         list_of_encrypted_letters.emplace_back(final_letter);
 
